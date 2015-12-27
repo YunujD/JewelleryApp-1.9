@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+ {% block jumbo %}
+ <div class='row'>
+  <div class='col-sm-6 col-sm-offset-3'>
+  <a href="{% url 'homepage' %}"><img src="{% static 'img/Jewellery.jpg' %}"/></a>
+  </div>
+  </div>  
+     <div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+      {% if request.user.is_authenticated %}
+      <h3> Welcome {{request.user}} !! </h3>
+      {% else %}
+    <h3> Please login First!! </h3>
+    {% endif %}
+    </div>
+  </div>  
+ {% endblock %}

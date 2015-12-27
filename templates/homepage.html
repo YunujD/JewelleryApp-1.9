@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block head_title %} 
+Welcome |{{block.super}} 
+{% endblock %}
+
+<style>
+    {% block style %}
+    
+    {% endblock %}
+    </style>
+
+{% block jumbo_content %}
+<div class="row">
+
+	<div class="col-xs-8">
+<div class="jumbotron">
+		{% if request.user.is_staff %}
+		<h1>Welcome Admin : {{ request.user }} </h1>
+        <p>Please click on the followin link to update the database if needed. </p>
+		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="http://127.0.0.1:8000/admin/" role="button">Database</a></p>
+	
+		{% else %}
+        <h1>Welcome {{ request.user }} </h1>
+        <p>This application is gaurunteed to make your work alot easier. We have used the python language and the Django Framework to create our very own Jewellery app. </p>
+        <p></p>
+        <p><a class="btn btn-lg btn-primary" href="{% url 'contact' %}" role="button">Contact Us &raquo;</a>
+        </p>
+       {% endif %}
+  </div>
+</div>
+<div class="col-sm-4" style="background-color:white;height:300px;">
+	<img src="{% static 'img/Jewellery.jpg' %}"/>
+	</div>
+</div>
+   {% endblock %}
+
+{% block content %}
+<div class="row">
+	
+  <div class="col-xs-3 pull-right">
+	<p class="lead text-align-center">Some Ads here Maybe :/ !</p>
+
+  </div>
+  <div class="col-sm-3" > 
+			<p class="lead text-align-center">Link to Some Section Here.</p>
+	</div>
+	<div class="col-sm-3" >
+		<p class="lead text-align-center">	Link to another Section Here.</p>
+	</div>
+	
+	<div class="col-sm-3" >
+		<p class="lead text-align-center">	Link to and another Section Here.</p>
+	</div>
+	
+ </div>
+</div>
+{% endblock %}
+
+
+
+
