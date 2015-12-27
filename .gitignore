@@ -55,6 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+<<<<<<< HEAD
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 
@@ -105,3 +106,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 .idea
+=======
+>>>>>>> 9d1a13a6fd0b8442c7c9d674187422662a566f65
