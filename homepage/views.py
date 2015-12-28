@@ -2,14 +2,14 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.core.mail import send_mail
 from django.conf import settings
 from .form import ContactForm
+from Product.forms import ProductSearchForm
 # Create your views here.
 def homepage(request):
 	if request.user.is_anonymous():   # to check if the user has logged in and isn't anonymous
 		return HttpResponseRedirect("http://127.0.0.1:8000/")
 	else:
-		return render(request,"homepage.html",{})
-
-
+		context={'search_form':ProductSearchForm}
+		return render(request,"homepage.html",context)
 
 
 def contact(request):

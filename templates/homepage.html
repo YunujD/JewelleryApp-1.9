@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load crispy_forms_tags %}
 
 
 
@@ -26,10 +26,21 @@ Welcome |{{block.super}}
 	
 		{% else %}
         <h1>Welcome {{ request.user }} </h1>
-        <p>This application is gaurunteed to make your work alot easier. We have used the python language and the Django Framework to create our very own Jewellery app. </p>
-        <p></p>
-        <p><a class="btn btn-lg btn-primary" href="{% url 'productSearch' %}" role="button">Search Product &raquo;</a>
-        </p>
+        <h4> Do a barcode search below: </h4>
+        <form method="POST" action="{% url 'productSearch' %}"> {% csrf_token %}
+			{{search_form|crispy}}
+
+			<input type="submit" value="Search Product" name="btn btn-lg btn-primary"/>
+
+			<br/>
+
+			{% if product_name %}
+			<br/>
+			<br/>
+			<h3>Product is {{product_name}}<h3>
+				We can add links or add to cart Details here.
+			{% endif %}
+			</form>
        {% endif %}
   </div>
 </div>
@@ -43,18 +54,19 @@ Welcome |{{block.super}}
 <div class="row">
 	
   <div class="col-xs-3 pull-right">
-	<p class="lead text-align-center">Some Ads here Maybe :/ !</p>
-
-  </div>
+	<p class="lead text-align-center">	Link to and another Section Here.</p>
+</div>  
   <div class="col-sm-3" > 
-			<p class="lead text-align-center">Link to Some Section Here.</p>
+  	<p class="lead text-align-center">	Link to and another Section Here.</p>
+			
 	</div>
 	<div class="col-sm-3" >
 		<p class="lead text-align-center">	Link to another Section Here.</p>
 	</div>
 	
 	<div class="col-sm-3" >
-		<p class="lead text-align-center">	Link to and another Section Here.</p>
+		<p class="lead text-align-center">Link to Some Section Here.</p>
+
 	</div>
 	
  </div>
