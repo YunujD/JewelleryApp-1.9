@@ -28,13 +28,13 @@ Welcome |{{block.super}}
         <h1>Welcome {{ request.user }} </h1>
         <p>This application is gaurunteed to make your work alot easier. We have used the python language and the Django Framework to create our very own Jewellery app. </p>
         <p></p>
-        <p><a class="btn btn-lg btn-primary" href="{% url 'contact' %}" role="button">Contact Us &raquo;</a>
+        <p><a class="btn btn-lg btn-primary" href="{% url 'productSearch' %}" role="button">Search Product &raquo;</a>
         </p>
        {% endif %}
   </div>
 </div>
 <div class="col-sm-4" style="background-color:white;height:300px;">
-	<img src="{% static 'img/Jewellery.jpg' %}"/>
+	<img src="{% static 'img/Jewellery.jpg' %}" class="img-responsive" />
 	</div>
 </div>
    {% endblock %}

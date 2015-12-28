@@ -23,7 +23,8 @@ urlpatterns = [
  	url(r'^$', 'homepage.views.home',name="home"), 
     url(r'^home/$', 'homepage.views.homepage',name="homepage"), 
  	url(r'^contact/$', 'homepage.views.contact',name="contact"), 
-    url(r'^about/$', 'JewelleryApp.views.about',name="about"), 
+    url(r'^about/$', 'JewelleryApp.views.about',name="about"),
+    url(r'^product/$', 'Product.views.search',name="productSearch"), 
     url(r'^admin/', admin.site.urls,name="admin"),
 
     #from django registration redux

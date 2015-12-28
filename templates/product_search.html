@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block jumbo %}
+<div class='row'>
+	<div class='col-sm-6 col-sm-offset-3'>
+
+	<form method="POST" action=""> {% csrf_token %}
+	{{search_form|crispy}}
+
+	<input type="submit" value="Search Product" name="btn btn-lg btn-primary"/>
+
+	<br/>
+
+	{% if productBarCode %}
+	<br/>
+	<br/>
+	<h3>Product Barcode is {{productBarCode}}<h3>
+
+	<h3> We can make this as get price selection </h3>
+	{% endif %}
+	</form>
+</div>
+</div>
+{% endblock %}
+
