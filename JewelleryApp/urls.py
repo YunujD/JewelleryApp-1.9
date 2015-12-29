@@ -19,12 +19,15 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import include
+import Product
 urlpatterns = [
  	url(r'^$', 'homepage.views.home',name="home"), 
     url(r'^home/$', 'homepage.views.homepage',name="homepage"), 
  	url(r'^contact/$', 'homepage.views.contact',name="contact"), 
-    url(r'^about/$', 'JewelleryApp.views.about',name="about"),
-    url(r'^product/$', 'Product.views.search',name="productSearch"), 
+    url(r'^activate/$', 'homepage.views.activate',name="activate"), 
+    url(r'^about/$', 'homepage.views.about',name="about"),
+    
+    url(r'^product/', include('Product.urls')), 
     url(r'^admin/', admin.site.urls,name="admin"),
 
     #from django registration redux

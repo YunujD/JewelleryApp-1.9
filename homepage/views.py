@@ -1,9 +1,19 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.mail import send_mail
 from django.conf import settings
-from .form import ContactForm
+from django.contrib.auth.models import User
+from .form import ContactForm,ActivationForm
 from Product.forms import ProductSearchForm
+from registration.models import RegistrationProfile
 # Create your views here.
+
+def home(request):
+	return render(request,"home.html",{})
+
+def about(request):
+	return render(request,"about.html",{})
+
+
 def homepage(request):
 	if request.user.is_anonymous():   # to check if the user has logged in and isn't anonymous
 		return HttpResponseRedirect("http://127.0.0.1:8000/")
@@ -25,14 +35,28 @@ def contact(request):
 		message=" %s: %s via %s" %(form_full_name,form_message,form_email)
 		send_mail(subject,message,from_email,to_email,fail_silently=False)
 	context={
-		'form':form,
+		'contact_form':form,
 		'title':title
 	}
 	return render(request,"forms.html",context)
 
+def activate(request):
+	form_username=None
+	context={}
+	if request.user.is_anonymous():   # to check if the user has logged in and isn't anonymous
+		return HttpResponseRedirect("http://127.0.0.1:8000/")
+	else:
+		form = ActivationForm(request.POST or None)
+		if form.is_valid():
+			form_username=form.cleaned_data.get('username')
+		context={
+			'activate_form':form,
+		}
+		if form_username:
+			user_instance=User.objects.get(username=form_username)
+			user=RegistrationProfile.objects.get(user=user_instance)
+			return HttpResponseRedirect("http://127.0.0.1:8000/accounts/activate/%s" %(user.activation_key))
+		else:
+			return render(request,"forms.html",context)
 
-def home(request):
-	return render(request,"home.html",{})
 
-def about(request):
-	return render(request,"about.html",{})

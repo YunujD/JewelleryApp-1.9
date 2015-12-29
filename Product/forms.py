@@ -11,3 +11,7 @@ class ProductSearchForm(forms.ModelForm):
 # class ProductForm(forms.Form):
 # 	Bar=forms.ModelChoiceField(queryset=ProductDetail.objects.all().order_by('product_name'))
 
+class ProductAddForm(forms.ModelForm):
+	class Meta:
+ 	   model = ProductDetail
+ 	   fields = ['product_name','product_desc','category','material','loss_type','barcode']

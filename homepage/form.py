@@ -1,4 +1,5 @@
 from django import forms
+from registration.models import RegistrationProfile
 
 class ContactForm(forms.Form):
 	full_name=forms.CharField(required=False)
@@ -12,3 +13,7 @@ class ContactForm(forms.Form):
 		if not extension=='gmail':
 			raise forms.ValidationError("Please give proper .edu extension")
 		return email
+
+class ActivationForm(forms.Form):
+	username=forms.ModelChoiceField(queryset=RegistrationProfile.objects.all().order_by('user'))
+	

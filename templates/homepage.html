@@ -56,9 +56,12 @@ Welcome |{{block.super}}
   <div class="col-xs-3 pull-right">
 	<p class="lead text-align-center">	Link to and another Section Here.</p>
 </div>  
-  <div class="col-sm-3" > 
-  	<p class="lead text-align-center">	Link to and another Section Here.</p>
-			
+  <div class="col-sm-3" >
+	  {% if request.user.is_staff %}
+		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'activate' %}" role="button">Activate an account</a></p>
+		{% else %} 
+  	<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'productAdd' %}" role="button">Add Product</a></p>
+  	{% endif %}
 	</div>
 	<div class="col-sm-3" >
 		<p class="lead text-align-center">	Link to another Section Here.</p>
