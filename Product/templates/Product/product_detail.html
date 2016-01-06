@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+ {% if request.user.is_authenticated %}
+<div class='row'>
+	<div class='col-sm-8'>
+<h2>{{object.product_name}}</h2>
+<br/>
+<br/>
+
+{% if object.image %}
+<div>
+<img src='{{object.image.url}}'/>
+</div>
+
+{% endif %}
+<br/>
+<br/>
+<br/>
+<p class='lead'>{{object.product_desc}}</p>
+</div>
+
+	<div class='col-sm-4'>
+		<h3>Barcode is {{object.barcode}}</h3>
+<!-- {% if object.variation_set.count > 1 %}
+<select class='form-control'>
+{% for var_obj in object.variation_set.all %}
+<option value='{{var_obj.id}}' >{{var_obj}}</option>
+{% endfor %}
+</select>
+{% endif %} -->
+<br/>
+<a href="#"> Add to Cart</a>
+<br/>
+<hr>
+<h4>Related Products </h4>
+</div>
+</div>
+
+{% else %}
+
+<h3> Please login first </h3>
+{% endif %}
+{% endblock %}

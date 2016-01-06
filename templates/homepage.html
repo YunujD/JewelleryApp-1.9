@@ -20,12 +20,11 @@ Welcome |{{block.super}}
 	<div class="col-xs-8">
 <div class="jumbotron">
 		{% if request.user.is_staff %}
-		<h1>Welcome Admin : {{ request.user }} </h1>
+		<h2><b>Welcome Admin : {{ request.user }} </b></h2>
         <p>Please click on the followin link to update the database if needed. </p>
 		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="http://127.0.0.1:8000/admin/" role="button">Database</a></p>
-	
 		{% else %}
-        <h1>Welcome {{ request.user }} </h1>
+        <h2><b>Welcome {{ request.user }} </b></h2>
         <h4> Do a barcode search below: </h4>
         <form method="POST" action="{% url 'productSearch' %}"> {% csrf_token %}
 			{{search_form|crispy}}
@@ -33,17 +32,13 @@ Welcome |{{block.super}}
 			<input type="submit" value="Search Product" name="btn btn-lg btn-primary"/>
 
 			<br/>
-
-			{% if product_name %}
-			<br/>
-			<br/>
-			<h3>Product is {{product_name}}<h3>
-				We can add links or add to cart Details here.
-			{% endif %}
 			</form>
        {% endif %}
   </div>
+  <hr/>
 </div>
+
+  <hr/>
 <div class="col-sm-4" style="background-color:white;height:300px;">
 	<img src="{% static 'img/Jewellery.jpg' %}" class="img-responsive" />
 	</div>
@@ -64,7 +59,7 @@ Welcome |{{block.super}}
   	{% endif %}
 	</div>
 	<div class="col-sm-3" >
-		<p class="lead text-align-center">	Link to another Section Here.</p>
+		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'product_list' %}" role="button">View Products</a></p>
 	</div>
 	
 	<div class="col-sm-3" >

@@ -11,9 +11,9 @@ class RegisterLoss(admin.ModelAdmin):
 admin.site.register(Loss,RegisterLoss)
 
 
-class RegisterProductDetails(admin.ModelAdmin):
+class RegisterProduct(admin.ModelAdmin):
 	list_display=['product_id','product_name','product_desc','category','barcode']
 	class Meta:
-		mode=ProductDetail
+		mode=Product
 
-admin.site.register(ProductDetail,RegisterProductDetails)
+admin.site.register(Product,RegisterProduct)

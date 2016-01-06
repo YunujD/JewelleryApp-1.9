@@ -15,8 +15,12 @@
 	{% if product_name %}
 	<br/>
 	<br/>
-	<h3>Product is {{product_name}}<h3>
+	<hr/>
+	<h3>Product is <a href="{{product_name.get_absolute_url}}">{{product_name}}</a><h3>
 		We can add links or add to cart Details here.
+	{% else %}
+	<br/>
+	<h3> No matching product found </h3>
 	{% endif %}
 	</form>
 </div>

@@ -8,13 +8,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand " href="{% url 'home' %}">Jewellery App</a>
-        </div>
+        <!--   <a class="navbar-brand " href="{% url 'home' %}">Jewellery App</a>
+       -->  </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="{% url 'homepage' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'contact' %}">Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            {% if request.user.is_authenticated %}
+             <form class="navbar-form navbar-left" method="GET" role="search" action='{% url "product_list" %}'>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="search">
+              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            {% endif %}
            <!--  <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
