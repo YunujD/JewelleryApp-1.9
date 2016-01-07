@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^activate/$', 'homepage.views.activate',name="activate"), 
     url(r'^about/$', 'homepage.views.about',name="about"),
     
-    url(r'^product/', include('Product.urls')), 
+    url(r'^products/', include('Product.urls')), 
     url(r'^admin/', admin.site.urls,name="admin"),
 
     #from django registration redux

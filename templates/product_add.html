@@ -5,9 +5,13 @@
 <div class='row'>
 	<div class='col-sm-6 col-sm-offset-3'>
 
-	<form method="POST" action=""> {% csrf_token %}
-	{{add_product_form|crispy}}
+	<form method="POST" action="" enctype="multipart/form-data" > {% csrf_token %}
 
+		<br/>
+		<br/>
+	{{add_product_form|crispy}}
+	<br/>
+	<br/>
 	<input type="submit" value="Add Product" name="btn btn-primary"/>
 
 	<br/>
@@ -15,7 +19,7 @@
 	{% if message %}
 	<br/>
 	<br/>
-	<h3>{{message}}
+	<h3>{{message}} 
 	{% endif %}
 	</form>
 </div>

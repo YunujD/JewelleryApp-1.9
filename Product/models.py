@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from django.core.urlresolvers import reverse
 from django.db import models
 from decimal import Decimal
 from Category.models import Category
@@ -20,7 +20,7 @@ class Loss(models.Model):
 
 
 
-class ProductDetail(models.Model):
+class Product(models.Model):
 	product_id=models.AutoField(primary_key=True)
 	product_name=models.CharField(max_length=50, unique=True)
 	product_desc=models.CharField(max_length=100)
@@ -28,9 +28,13 @@ class ProductDetail(models.Model):
 	category=models.ForeignKey(Category, related_name="Sharer")   #_id is automatically added in case of primary key
 	material=models.ForeignKey(Material) 
 	loss_type = models.ForeignKey(Loss)
+	image=models.ImageField(upload_to='products/',blank=True,null=True)
 	barcode=models.CharField(max_length=15)
 	def __unicode__(self):
 		return self.product_name
 
 	class Meta:
 		unique_together=('product_id','category')
+
+	def get_absolute_url(self):
+		return reverse("product_detail",kwargs={"pk":self.pk})

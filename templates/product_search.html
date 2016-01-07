@@ -3,8 +3,9 @@
 
 {% block jumbo %}
 <div class='row'>
-	<div class='col-sm-6 col-sm-offset-3'>
-
+	<div class='col-sm-6 col-sm-offset-1'>
+	<!-- <div class='col-sm-7'> -->
+	
 	<form method="POST" action=""> {% csrf_token %}
 	{{search_form|crispy}}
 
@@ -15,8 +16,16 @@
 	{% if product_name %}
 	<br/>
 	<br/>
-	<h3>Product is {{product_name}}<h3>
-		We can add links or add to cart Details here.
+	<hr/>
+	<h3>Product is <a href="{{product_name.get_absolute_url}} ">{{product_name}}</a><h3>
+		<br/>
+		<img src='{{product_name.image.url}}'/>
+	</div>
+	<div class='col-sm-3 col-sm-offset-2'>
+		<h3><a href="#"> &#09;Add to Cart</a></h3>
+	{% else %}
+	<br/>
+	<h3> No matching product found </h3>
 	{% endif %}
 	</form>
 </div>
