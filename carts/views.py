@@ -10,7 +10,7 @@ from carts.models import Cart, CartItem
 
 class CartView(SingleObjectMixin, View):
 	model = Cart
-	template_name = "carts/view.html"
+	template_name = "carts/cart_view.html"
 
 	def get_object(self, *args, **kwargs):
 		self.request.session.set_expiry(300) #5 minutes
