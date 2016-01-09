@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import include
 import Product
+from carts.views import CartView
 urlpatterns = [
  	url(r'^$', 'homepage.views.home',name="home"), 
     url(r'^home/$', 'homepage.views.homepage',name="homepage"), 
@@ -32,6 +33,7 @@ urlpatterns = [
 
     #from django registration redux
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^cart/$', CartView.as_view(), name='cart'),
 ]
 
 if settings.DEBUG:

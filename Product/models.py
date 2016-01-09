@@ -38,3 +38,12 @@ class Product(models.Model):
 
 	def get_absolute_url(self):
 		return reverse("product_detail",kwargs={"pk":self.pk})
+
+	def add_to_cart(self):
+		return "%s?item=%s&qty=1" %(reverse("cart"), self.product_id)
+
+	def remove_from_cart(self):
+		return "%s?item=%s&qty=1&delete=True" %(reverse("cart"), self.product_id)
+
+	def get_title(self):
+		return "%s" %(self.product_name)

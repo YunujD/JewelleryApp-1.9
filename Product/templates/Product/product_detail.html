@@ -31,7 +31,7 @@
 </select>
 {% endif %} -->
 <br/>
-<a href="#"> Add to Cart</a>
+<a href="{% url 'cart' %}?item={{object.product_id}}"> Add to Cart</a>
 <br/>
 <hr>
 <h4>Related Products </h4>
