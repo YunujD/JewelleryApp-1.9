@@ -4,71 +4,81 @@
 
 
 
-{% block head_title %} 
-Welcome |{{block.super}} 
+{% block head_title %}
+    Welcome |{{ block.super }}
 {% endblock %}
 
 <style>
     {% block style %}
-    
+
     {% endblock %}
-    </style>
+</style>
 
 {% block jumbo_content %}
-<div class="row">
+    <div class="row">
 
-	<div class="col-xs-8">
-<div class="jumbotron">
-		{% if request.user.is_staff %}
-		<h2><b>Welcome Admin : {{ request.user }} </b></h2>
-        <p>Please click on the followin link to update the database if needed. </p>
-		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="http://127.0.0.1:8000/admin/" role="button">Database</a></p>
-		{% else %}
-        <h2><b>Welcome {{ request.user }} </b></h2>
-        <h4> Do a barcode search below: </h4>
-        <form method="POST" action="{% url 'productSearch' %}"> {% csrf_token %}
-			{{search_form|crispy}}
+        <div class="col-xs-8">
+            <div class="jumbotron">
+                {% if request.user.is_staff %}
+                    <h2><b>Welcome Admin : {{ request.user }} </b></h2>
+                    <p>Please click on the followin link to update the database if needed. </p>
+                    <p class="lead text-align-center"><a class="btn btn-lg btn-primary"
+                                                         href="http://127.0.0.1:8000/admin/" role="button">Database</a>
+                    </p>
+                {% else %}
+                    <h2><b>Welcome {{ request.user }} </b></h2>
+                    <h4> Do a barcode search below: </h4>
+                    <form method="POST" action="{% url 'productSearch' %}"> {% csrf_token %}
+                        {{ search_form|crispy }}
 
-			<input type="submit" value="Search Product" name="btn btn-lg btn-primary"/>
+                        <input type="submit" value="Search Product" name="btn btn-lg btn-primary"/>
 
-			<br/>
-			</form>
-       {% endif %}
-  </div>
-  <hr/>
-</div>
+                        <br/>
+                    </form>
+                {% endif %}
+            </div>
+            <hr/>
+        </div>
 
-  <hr/>
-<div class="col-sm-4" style="background-color:white;height:300px;">
-	<img src="{% static 'img/Jewellery.jpg' %}" class="img-responsive" />
-	</div>
-</div>
-   {% endblock %}
+        <hr/>
+        <div class="col-sm-4" style="margin-top: -10px">
+            <a class="btn btn-success btn pull-right glyphicon glyphicon-shopping-cart" href="{% url 'cart' %}"
+               role="button"> Cart</a>
+        </div>
+
+        <div class="col-sm-4" style="background-color:white;height:300px; margin-top: 20px">
+            <img src="{% static 'img/Jewellery.jpg' %}" class="img-responsive"/>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-<div class="row">
-	
-  <div class="col-xs-3 pull-right">
-	<p class="lead text-align-center">	Link to and another Section Here.</p>
-</div>  
-  <div class="col-sm-3" >
-	  {% if request.user.is_staff %}
-		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'activate' %}" role="button">Activate an account</a></p>
-		{% else %} 
-  	<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'productAdd' %}" role="button">Add Product</a></p>
-  	{% endif %}
-	</div>
-	<div class="col-sm-3" >
-		<p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'product_list' %}" role="button">View Products</a></p>
-	</div>
-	
-	<div class="col-sm-3" >
-		<p class="lead text-align-center">Link to Some Section Here.</p>
+    <div class="row">
 
-	</div>
-	
- </div>
-</div>
+        <div class="col-xs-3 pull-right">
+            <p class="lead text-align-center"> Link to and another Section Here.</p>
+        </div>
+        <div class="col-sm-3">
+            {% if request.user.is_staff %}
+                <p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'activate' %}"
+                                                     role="button">Activate an account</a></p>
+            {% else %}
+                <p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'productAdd' %}"
+                                                     role="button">Add Product</a></p>
+            {% endif %}
+        </div>
+        <div class="col-sm-3">
+            <p class="lead text-align-center"><a class="btn btn-lg btn-primary" href="{% url 'product_list' %}"
+                                                 role="button">View Products</a></p>
+        </div>
+
+        <div class="col-sm-3">
+            <p class="lead text-align-center">Link to Some Section Here.</p>
+
+        </div>
+
+    </div>
+    </div>
 {% endblock %}
 
 
