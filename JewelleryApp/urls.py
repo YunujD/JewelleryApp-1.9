@@ -19,23 +19,28 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import include
-import Product
-from carts.views import CartView
-urlpatterns = [
- 	url(r'^$', 'homepage.views.home',name="home"), 
-    url(r'^home/$', 'homepage.views.homepage',name="homepage"), 
- 	url(r'^contact/$', 'homepage.views.contact',name="contact"), 
-    url(r'^activate/$', 'homepage.views.activate',name="activate"), 
-    url(r'^about/$', 'homepage.views.about',name="about"),
-    
-    url(r'^products/', include('Product.urls')), 
-    url(r'^admin/', admin.site.urls,name="admin"),
 
-    #from django registration redux
+from carts.views import CartView
+
+
+urlpatterns = [
+    url(r'^$', 'homepage.views.home', name="home"),
+    url(r'^home/$', 'homepage.views.homepage', name="homepage"),
+    url(r'^contact/$', 'homepage.views.contact', name="contact"),
+    url(r'^activate/$', 'homepage.views.activate', name="activate"),
+    url(r'^about/$', 'homepage.views.about', name="about"),
+
+
+    url(r'^products/', include('Product.urls')),
+    url(r'^admin/', admin.site.urls, name="admin"),
+
+    # from django registration redux
     url(r'^accounts/', include('registration.backends.default.urls')),
+
+    # generic Views
     url(r'^cart/$', CartView.as_view(), name='cart'),
 ]
 
 if settings.DEBUG:
-	urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
-	urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

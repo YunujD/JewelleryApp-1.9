@@ -1,0 +1,38 @@
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div class="container">
+            <blockquote class="quote-box">
+                <p class="quotation-mark">
+                    “
+                </p>
+
+                <p class="quote-text" align="right">
+                    Prices as of {{ request.session.material_date }}
+                </p>
+
+                <p class="blog-post-bottom pull-left">
+                    GOLD
+                </p>
+
+                <p class="blog-post-bottom pull-right">
+                    <!--<span class="badge quote-badge"></span>  -->
+                    SILVER
+                </p>
+                <br>
+
+
+                <hr>
+                <div class="blog-post-actions">
+                    <p class="blog-post-bottom pull-left">
+                        {{ request.session.silver_price }}
+                    </p>
+
+                    <p class="blog-post-bottom pull-right">
+                        <!--<span class="badge quote-badge"></span>  -->
+                        {{ request.session.gold_price }}
+                    </p>
+                </div>
+            </blockquote>
+        </div>
+    {% endif %}
+{% endblock %}

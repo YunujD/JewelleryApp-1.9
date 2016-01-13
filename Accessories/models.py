@@ -1,15 +1,14 @@
 from __future__ import unicode_literals
 
-from django.db import models
-# Create your models here.
-class Material(models.Model):
-    material_id = models.AutoField(primary_key=True, null=False)
-    material_name = models.CharField(max_length=100, unique=True)
-    date = models.DateTimeField(auto_now_add=True, auto_now=False)
-    price = models.IntegerField()
+import datetime
 
-    def __unicode__(self):
-        return self.material_name
+from django.db import models
+
+
+class Material(models.Model):
+    materialDate = models.CharField(primary_key=True, max_length=15, default=str(datetime.datetime.now().date()))
+    goldPrice = models.FloatField(blank=False)
+    silverPrice = models.FloatField(blank=False)
 
 
 # class Stone(models.Model):

@@ -5,7 +5,7 @@ from .models import *
 # Register your models here.
 
 class RegisterMaterial(admin.ModelAdmin):
-    list_display = ['material_id', 'material_name', 'date', 'price']
+    list_display = ['materialDate', 'goldPrice', 'silverPrice']
 
     class Meta:
         mode = Material
