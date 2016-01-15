@@ -1,5 +1,5 @@
 import datetime
-
+from decimal import Decimal
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.mail import send_mail
 from django.conf import settings

@@ -32,7 +32,7 @@ def search(request):
 		#product_exists=Product.objects.filter(barcode=barcode).values()
 		product_pop = Product.objects.filter(barcode=barcode).first()
 		temp = None
-		temp = product_pop.calc_price(request)
+		temp = product_pop.calc_price()
 		#print temp
 		# for stone in temp['stone_details']:
 		# 	print stone.quantity
