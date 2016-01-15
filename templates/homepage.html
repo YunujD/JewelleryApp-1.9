@@ -18,7 +18,7 @@
     <div class="row">
 
         <div class="col-xs-8">
-            <div class="jumbotron" style="position:relative;margin-top: -225px;">
+            <div class="jumbotron" style="position:relative;margin-top:25px;">
                 {% if request.user.is_staff %}
                     <h2><b>Welcome Admin : {{ request.user }} </b></h2>
                     <form method="POST" action="{% url 'productSearch' %}"> {% csrf_token %}
@@ -40,14 +40,13 @@
                     </form>
                 {% endif %}
             </div>
-            <hr/>
         </div>
-
+        {% include 'material_list.html' %}
         <hr/>
 
-        <div class="col-sm-4" style="background-color:white;height:300px; margin-top: 20px">
+        <!-- <div class="col-sm-4" style="background-color:white;height:300px; margin-top: 20px">
             <img src="{% static 'img/Jewellery.jpg' %}" class="img-responsive"/>
-        </div>
+        </div> -->
     </div>
 {% endblock %}
 

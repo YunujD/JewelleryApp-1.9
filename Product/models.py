@@ -115,7 +115,7 @@ class Product(models.Model):
 		# 	print stone.stone_type.Stone.rate_per_carat
 		# 	print stone.stone_type.weight
 
-
+		print data_dict
 		return data_dict
 
 		def cartItem_price(self):

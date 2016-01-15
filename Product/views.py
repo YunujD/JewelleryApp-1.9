@@ -25,14 +25,14 @@ class ProductListView(ListView):
 
 def search(request):
 	product_name=None
+	temp = None
 	form=ProductSearchForm(request.POST or None)
 	if form.is_valid():
 		# login=form.save(commit=False)
 		barcode=form.cleaned_data['barcode']
 		#product_exists=Product.objects.filter(barcode=barcode).values()
 		product_pop = Product.objects.filter(barcode=barcode).first()
-		temp = None
-		temp = product_pop.calc_price()
+		
 		#print temp
 		# for stone in temp['stone_details']:
 		# 	print stone.quantity
@@ -41,6 +41,7 @@ def search(request):
 		#print product_pop
 		if product_pop:
 			product_name=product_pop
+			temp = product_pop.calc_price()
 	
 	context={'search_form':form,'product_name':product_name, 'product_data': temp}
 	template="product_search.html"

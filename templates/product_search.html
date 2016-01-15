@@ -13,7 +13,7 @@
 
 	<br/>
 
-	{% if product_name %}
+	{% if product_name and product_data %}
 	<br/>
 	<br/>
 	<hr/>
@@ -21,20 +21,37 @@
 		<br/>
 		{% if product_name.image %}
 		<img src='{{product_name.image.url}}'/>
+		<hr/>
+		<br/>
+		<br/>
+		<br/>
+		
 		{% endif %}
 		<!-- <p>{{ product_data }}</p> -->
-		<p>Material: {{ product_data.material }}</p>
-		<p>Category: {{ product_data.category }}</p>
-		<p>Sub-Category: {{ product_data.sub_category }}</p>
+		<table class="table table-striped">
+			<tr>
+				<th>Material</th>
+				<th>Category</th>
+				<th>Sub-Category</th>
+			</tr>
+			<tr>
+				<td>{{ product_data.material }}</td>
+				<td>{{ product_data.category }}</td>
+				<td>{{ product_data.category }}</td>
+			</tr>
+		</table>
+		<hr/>
+		<br/>
+		<br/>
 		{% if product_data.stone_details %}
-			<p>Stone Price Breakdown</p>
+			<p class="lead text-align-center">Stone Price Breakdown</p>
 			<table class="table table-striped">
 			<tr>
-				<td>Stone Type</td>
-				<td>Price per carat</td>
-				<td>weight</td>
-				<td>Quantity</td>
-				<td>Stone Price</td>
+				<th>Stone Type</th>
+				<th>Price per carat</th>
+				<th>weight</th>
+				<th>Quantity</th>
+				<th>Stone Price</th>
 			</tr>
 			{% for stone in product_data.stone_details %}
 			<tr>
@@ -55,6 +72,9 @@
 			
 			{% endfor %}
 			</table>
+			<hr/>
+			<br/>
+			<br/>
 		{% endif %}
 		<p>Product Weight: {{ product_data.weight}}</p>
 		<p>Product Loss: {{ product_data.loss_value}}</p>
