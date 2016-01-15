@@ -3,18 +3,29 @@
 
 
 {% block content %}
- {% if request.user.is_authenticated %}
-<h1>Cart</h1>
-<hr/>
+<br>
+
+            <div class='row'>
+                 <div class='col-sm-3 lead text-align-center' >
+              <h1>Cart</h1>
+                </div>
+                <div class='col-sm-7'>
+                {% include 'material_list.html' %}
+            </div>
+        </div>
+       
 <br>
 <br>
+<br>
+
 {% if object.cartitem_set.count < 1 %}
     <h2> No items Present</h2>
             {% else %}
     </h2>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-10 col-md-offset-1">
+            
+            <div class="col-sm-9 col-md-10 ">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -32,21 +43,25 @@
                             <tr>
                                 <td class="col-sm-8 col-md-6">
                                     <div class="media">
-                                        <a class="thumbnail pull-left" href="#"> <img class="media-object"
+                                        <a class="thumbnail pull-left" href="#"> {% if item.item.image %}
+                                                                            <img src='{{item.item.image.url}}' height="70" width="70"/>
+                                                                            {% else %}
+                                                                                    <img class="media-object"
                                                                                       src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
                                                                                       style="width: 72px; height: 72px;">
+                                                                            {% endif %}
                                         </a>
 
                                         <div class="media-body">
-                                            <h4 class="media-heading"><a href="#">{{ item.item.get_title }}</a></h4>
+                                            <h4 class="media-heading" style="margin-left:15px;margin-top:20px"><a href="{{item.item.get_absolute_url}}">{{ item.item.get_title }}</a></h4>
                                             <!--<h5 class="media-heading"> by <a href="#">Brand name</a></h5>
                                             <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>-->
-                                            <span>Status: </span><span class="text-success"><strong>In
+                                            <span style="margin-left:15px;margin-top:20px">Status: </span><span class="text-success" ><strong>In
                                             Stock</strong></span>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="col-md-1" style="text-align: center">
+                                <td class="col-md-1" style="text-align: center;margin-left:15px;margin-top:20px">
                                     <input type="number" class="form-control" id="exampleInputEmail1"
                                            value='{{ item.quantity }}'/>
                                 </td>
@@ -54,11 +69,13 @@
                                 <td class="col-md-1 text-center"><strong>{{ item.line_item_total }}</strong></td>
                                 <td class="col-md-1">
                                     <div class="media">
-                                        <input type="submit" class="btn btn-info btn pull-right" value=" Update">
+                                        <input type="submit" class="btn btn-info btn pull-right" style="margin-top:15px"value=" Update">
 
                                         <div class="col-md-offset-1">
+                                            <br/>
+                                            <br/>
                                             <a href='{{ item.remove }}'>
-                                                <button type="button" class="btn btn-danger btn pull-right">
+                                                <button type="button" class="btn btn-danger btn pull-right" style="margin-left:15px;margin-top:10px">
                                                     <span class="glyphicon glyphicon-remove"></span> Remove
                                                 </button>
                                             </a>
@@ -90,17 +107,23 @@
                         <td><h3>Total</h3></td>
                         <td class="text-right"><h3><strong>$31.53</strong></h3></td>
                     </tr>
+
                     <tr>
-                        <td></td>
+                        
+                      <td></td>
                         <td></td>
                         <td></td>
                         <td>
+                           <br>
+                           <br>
                             <button type="button" class="btn btn-default">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                <span class="glyphicon glyphicon-shopping-cart"></span> <a href="{% url 'product_list' %}">Continue Shopping</a>
                             </button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-success">
+                            <br>
+                            <br>
+                                <button type="button" class="btn btn-success">
                                 Checkout <span class="glyphicon glyphicon-play"></span>
                             </button>
                         </td>
@@ -112,9 +135,6 @@
     </div>
 
 {% endif %}
-{% else %}
-<h3> Please login first </h3>
 
-{% endif %}
 {% endblock %}
 

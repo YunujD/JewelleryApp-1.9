@@ -21,6 +21,7 @@ class CartItem(models.Model):
 		return self.item.product_name
 
 
+
 def cart_item_pre_save_reciever(sender, instance, *args, **kwargs):
 	qty = instance.quantity
 	price = instance.item.calc_price()
@@ -28,7 +29,10 @@ def cart_item_pre_save_reciever(sender, instance, *args, **kwargs):
 	instance.itemPrice = Decimal(price['price'])
 	line_item_total = Decimal(qty) * Decimal(price['price'])
 	instance.line_item_total = line_item_total
+
 pre_save.connect(cart_item_pre_save_reciever, sender=CartItem)
+
+
 
 class Cart(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)

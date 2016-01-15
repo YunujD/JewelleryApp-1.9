@@ -2,6 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% block jumbo %}
+	{% if messages %}
+	<div class='container col-sm-6 col-sm-offset-3'>
+		<div class='alert alert-success text-center alert-dismissible' role='alert'>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				 {% for message in messages %}
+			   		 <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p><br/><br/>
+			     {% endfor %}
+		</div>
+	</div>
+	{% endif %}
+
+
+
 <div class='row'>
 	<div class='col-sm-6 col-sm-offset-3'>
 
@@ -16,11 +29,7 @@
 
 	<br/>
 
-	{% if message %}
-	<br/>
-	<br/>
-	<h3>{{message}} 
-	{% endif %}
+
 	</form>
 </div>
 </div>

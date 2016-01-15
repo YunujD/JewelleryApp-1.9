@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
- {% if request.user.is_authenticated %}
+
 
 {% if object_list %}
 
@@ -13,7 +13,7 @@
 <table class='table table-striped'>
 {% for object in object_list %}
 <tr>
-	<td><a class='lead text-align-center' href="{{object.get_absolute_url}}">{{object.product_name}}</a></td>
+	<td><a class='lead text-align-center' href="{{object.get_absolute_url}}" >{{object.product_name}}</a></td>
 	{% if object.image %}
 	<td><img src='{{object.image.url}}' height="70" width="70" /></td>
 	{% endif %}
@@ -24,10 +24,6 @@
 <h3> The Search didn't return any match </h3>
 {% endif %}
 
-{% else %}
-
-<h3> Please login first </h3>
-{% endif %}
 {% endblock %}
 
 

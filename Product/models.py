@@ -74,16 +74,16 @@ class Product(models.Model):
 		else:
 			loss_value = None
 		if material == 'Gold':
-			gold_obj = Material.objects.filter(name__startswith="gold").order_by('-id').first()
+			gold_obj = Material.objects.filter(name__startswith="gold").order_by('-id')[0]
 			if gold_obj:
 				gold_id = gold_obj.id
-				latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp').first()
+				latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp')[0]
 				material_rate = Decimal(latest_gold_obj.rate)
 		else:
-			silver_obj = Material.objects.filter(name__startswith="silver").order_by('-id').first()
+			silver_obj = Material.objects.filter(name__startswith="silver").order_by('-id')[0]
 			if silver_obj:
 				silver_id = silver_obj.id
-				latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp').first()
+				latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp')[0]
 				material_rate = Decimal(latest_silver_obj.rate)
 			
 		weight = self.product_weight
@@ -95,7 +95,7 @@ class Product(models.Model):
 		data_dict['weight'] = weight
 		data_dict['loss_value'] = loss_value
 
-		total_price = None
+		total_price = 0.0
 		if category == 'Jwellery Item':
 			price_array = []
 			stone_total = 0
@@ -115,7 +115,7 @@ class Product(models.Model):
 		# 	print stone.stone_type.Stone.rate_per_carat
 		# 	print stone.stone_type.weight
 
-
+		print data_dict
 		return data_dict
 
 		def cartItem_price(self):
@@ -130,16 +130,16 @@ class Product(models.Model):
 			else:
 				loss_value = None
 			if material == 'Gold':
-				gold_obj = Material.objects.filter(name__startswith="gold").order_by('-id').first()
+				gold_obj = Material.objects.filter(name__startswith="gold").order_by('-id')[0]
 				if gold_obj:
 					gold_id = gold_obj.id
-					latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp').first()
+					latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp')[0]
 					material_rate = Decimal(latest_gold_obj.rate)
 			else:
-				silver_obj = Material.objects.filter(name__startswith="silver").order_by('-id').first()
+				silver_obj = Material.objects.filter(name__startswith="silver").order_by('-id')[0]
 				if silver_obj:
 					silver_id = silver_obj.id
-					latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp').first()
+					latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp')[0]
 					material_rate = Decimal(latest_silver_obj.rate)
 				
 			weight = self.product_weight

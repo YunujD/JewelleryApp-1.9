@@ -1,16 +1,18 @@
 from django.shortcuts import render,HttpResponseRedirect
 from django.forms import Select
+from django.contrib import messages
 from .forms import ProductSearchForm,ProductAddForm
 from .models import Product
 from django.db.models import Q
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from .mixin import LoginRequiredMixin
 # Create your views here.
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin,DetailView):
 	model=Product
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin,ListView):
 	model=Product
 
 	def get_queryset(self, *args,**kwargs):
@@ -25,14 +27,14 @@ class ProductListView(ListView):
 
 def search(request):
 	product_name=None
+	temp = None
 	form=ProductSearchForm(request.POST or None)
 	if form.is_valid():
 		# login=form.save(commit=False)
 		barcode=form.cleaned_data['barcode']
 		#product_exists=Product.objects.filter(barcode=barcode).values()
 		product_pop = Product.objects.filter(barcode=barcode).first()
-		temp = None
-		temp = product_pop.calc_price()
+		
 		#print temp
 		# for stone in temp['stone_details']:
 		# 	print stone.quantity
@@ -41,6 +43,7 @@ def search(request):
 		#print product_pop
 		if product_pop:
 			product_name=product_pop
+			temp = product_pop.calc_price()
 	
 	context={'search_form':form,'product_name':product_name, 'product_data': temp}
 	template="product_search.html"
@@ -50,18 +53,18 @@ def search(request):
 		return render(request,template,context)
 
 def add(request):
-	message=None
 	if request.user.is_anonymous():   # to check if the user has logged in and isn't anonymous
 		return HttpResponseRedirect("http://127.0.0.1:8000/")
 	else:
 		form=ProductAddForm(request.POST or None, request.FILES)
 		if form.is_valid():
 			instance=form.save(commit=False)
-			instance.image=form.cleaned_data['image']
+			instance.image=form.cleaned_data['image'] 
+			product_name=form.cleaned_data['product_name']
 			instance.save()
-			message="Product Added"
+			messages.success(request,"Product %s Successfully Added!"%(product_name))
 			
-		context={'add_product_form':form,'message':message}
+		context={'add_product_form':form}
 		template="product_add.html"
 		return render(request,template,context)
 

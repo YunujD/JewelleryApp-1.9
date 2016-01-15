@@ -2,13 +2,14 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.base import View
+from Product.mixin import LoginRequiredMixin
 # Create your views here.
 
 from Product.models import Product
 from carts.models import Cart, CartItem
 
 
-class CartView(SingleObjectMixin, View):
+class CartView(SingleObjectMixin,LoginRequiredMixin, View):
     model = Cart
     template_name = "carts/cart_view.html"
 
@@ -26,8 +27,8 @@ class CartView(SingleObjectMixin, View):
             cart.save()
         return cart
 
-    def get(self, request, *args, **kwargs):
-        cart = self.get_object()
+    def get(self, request, *args, **kwargs): 
+        cart = self.get_object() 
         item_id = request.GET.get("item")
         delete_item = request.GET.get("delete")
         if item_id:
