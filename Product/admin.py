@@ -17,3 +17,10 @@ class RegisterProduct(admin.ModelAdmin):
 		mode=Product
 
 admin.site.register(Product,RegisterProduct)
+
+class RegisterProductStone(admin.ModelAdmin):
+	list_display=['stone_type','product','quantity']
+	class Meta:
+		mode=ProductStone
+
+admin.site.register(ProductStone,RegisterProductStone)

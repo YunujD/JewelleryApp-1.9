@@ -21,10 +21,13 @@
             <div class="jumbotron" style="position:relative;margin-top: -225px;">
                 {% if request.user.is_staff %}
                     <h2><b>Welcome Admin : {{ request.user }} </b></h2>
-                    <p>Please click on the followin link to update the database if needed. </p>
-                    <p class="lead text-align-center"><a class="btn btn-lg btn-primary"
-                                                         href="http://127.0.0.1:8000/admin/" role="button">Database</a>
-                    </p>
+                    <form method="POST" action="{% url 'productSearch' %}"> {% csrf_token %}
+                        {{ search_form|crispy }}
+
+                        <input type="submit" value="Search Product" name="btn btn-lg btn-primary"/>
+
+                        <br/>
+                    </form>
                 {% else %}
                     <h2><b>Welcome {{ request.user }} </b></h2>
                     <h4> Do a barcode search below: </h4>

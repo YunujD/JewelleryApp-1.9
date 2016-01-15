@@ -15,8 +15,14 @@ class CartItem(models.Model):
 	def remove(self):
 		return self.item.remove_from_cart()
 		
+	def itemPrice(self, requests):
+		data_dict = self.item.calc_price(requests)
+		print "hello"
+		print data_dict['price']
+		return data_dict['price']
 	def __unicode__(self):
 		return self.item.product_name
+
 
 
 

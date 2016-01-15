@@ -8,8 +8,8 @@ from registration.models import RegistrationProfile
 
 from .form import ContactForm, ActivationForm
 from Product.forms import ProductSearchForm
-from Accessories.models import Material
-
+from Accessories.models import Material,MaterialPrice
+import pprint
 
 
 def home(request):
@@ -17,7 +17,6 @@ def home(request):
 
 
 def about(request):
-    print request
     return render(request, "about.html", {})
 
 
@@ -25,10 +24,25 @@ def homepage(request):
     if request.user.is_anonymous():  # to check if the user has logged in and isn't anonymous
         return HttpResponseRedirect("http://127.0.0.1:8000/")
     else:
-        queryset = Material.objects.get(materialDate=str(datetime.datetime.now().date()))
-        request.session['material_date'] = queryset.materialDate
-        request.session['gold_price'] = queryset.goldPrice
-        request.session['silver_price'] = queryset.silverPrice
+        #queryset = MaterialPrice.objects.get(timestamp=str(datetime.datetime.now().date()))
+        gold_obj = Material.objects.filter(name__startswith="gold").order_by('-id').first()
+        if gold_obj:
+            gold_id = gold_obj.id
+            latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp').first()
+            request.session['material_date'] = latest_gold_obj.timestamp.strftime('%Y-%m-%d T %H:%M:%S')
+            request.session['gold_price'] = float(latest_gold_obj.rate)
+            #print request.session.gold_price
+        silver_obj = Material.objects.filter(name__startswith="silver").order_by('-id').first()
+        if silver_obj:
+            silver_id = silver_obj.id
+            latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp').first()
+            request.session['silver_price'] = float(latest_silver_obj.rate)
+
+        #silver_id = Material.oblects.filter(name__startswith="silver")
+        #gold_price = MaterialPrice.objects.()
+        #request.session['material_date'] = queryset.materialDate
+        ##request.session['gold_price'] = queryset.goldPrice
+        #request.session['silver_price'] = queryset.silverPrice
         context = {'search_form': ProductSearchForm}
         return render(request, "homepage.html", context)
 

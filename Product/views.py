@@ -29,11 +29,20 @@ def search(request):
 	if form.is_valid():
 		# login=form.save(commit=False)
 		barcode=form.cleaned_data['barcode']
-		product_exists=Product.objects.filter(barcode=barcode)
-		if product_exists:
-			product_name=product_exists[0]
+		#product_exists=Product.objects.filter(barcode=barcode).values()
+		product_pop = Product.objects.filter(barcode=barcode).first()
+		temp = None
+		temp = product_pop.calc_price(request)
+		#print temp
+		# for stone in temp['stone_details']:
+		# 	print stone.quantity
+		# 	print stone.stone_type.Stone.rate_per_carat
+		# 	print stone.stone_type.weight
+		#print product_pop
+		if product_pop:
+			product_name=product_pop
 	
-	context={'search_form':form,'product_name':product_name}
+	context={'search_form':form,'product_name':product_name, 'product_data': temp}
 	template="product_search.html"
 	if request.user.is_anonymous():   # to check if the user has logged in and isn't anonymous
 		return HttpResponseRedirect("http://127.0.0.1:8000/")
