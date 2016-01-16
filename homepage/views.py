@@ -1,5 +1,3 @@
-import datetime
-from decimal import Decimal
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.mail import send_mail
 from django.conf import settings
@@ -9,11 +7,14 @@ from registration.models import RegistrationProfile
 from .form import ContactForm, ActivationForm
 from Product.forms import ProductSearchForm
 from Accessories.models import Material,MaterialPrice
-import pprint
+from Customer.forms import CustomerForm
 
 
 def home(request):
-    return render(request, "home.html", {})
+    customer_form = CustomerForm(request.POST or None)
+    if customer_form.is_valid():
+        print customer_form.cleaned_data['first_name']
+    return render(request, "home.html", {'form': customer_form})
 
 
 def about(request):

@@ -51,8 +51,6 @@ INSTALLED_APPS = [
     'Category',
     'Product',
     'Customer',
-  
-    
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -71,7 +69,8 @@ ROOT_URLCONF = 'JewelleryApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'Customer', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,4 +151,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 ACCOUNT_ACTIVATION_DAYS=8
 REGISTRATION_AUTO_LOGIN=True
 SITE_ID=1
-LOGIN_REDIRECT_URL='/home/'
+LOGIN_REDIRECT_URL = '/'
