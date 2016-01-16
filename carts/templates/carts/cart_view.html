@@ -1,5 +1,51 @@
 {% extends "base.html" %}
 
+<script>
+{% block jquery %}
+$(".update-qty").click(function(event){
+    // $(this).next(".btn-update").fadeIn();
+
+    // event.preventDefault();
+    // .prev(h1)
+    event.preventDefault();
+    //alert('prevented');
+    var item = $(this).prev().prev().val();
+    var qty = $(this).prev().val()
+    var data = {
+        item: item,
+        qty: qty
+    }
+    //console.log(data);
+    $.ajax({
+        type: "GET", // "POST"
+        url: "{% url 'cart' %}",
+        data: data,
+        success: function(data) {
+            console.log(data)
+            //$("#jquery-message").text("Added " + data.item_added + " Deleted " + data.deleted)
+            $("#jquery-message").text("Cart Updated")
+            if (data.deleted){
+                $("#item-"+item).fadeOut();
+            } else {
+                $("#item-line-total-"+item).text(data.line_total);
+                $("#subtotal").text(data.subtotal);
+            }
+        }, 
+        error: function(response, error) {
+            // console.log(response)
+            // console.log(error)
+            $("#add-form").submit()
+        }
+    })
+
+
+
+
+
+});
+
+{% endblock %}
+</script>
 
 
 {% block content %}
@@ -17,7 +63,7 @@
 <br>
 <br>
 <br>
-
+<h3 id='jquery-message'></h3>
 {% if object.cartitem_set.count < 1 %}
     <h2> No items Present</h2>
             {% else %}
@@ -40,7 +86,7 @@
 
                     {% for item in object.cartitem_set.all %}
                         <form action="." method="GET">
-                            <tr>
+                            <tr id='item-{{ item.item.id }}'>
                                 <td class="col-sm-8 col-md-6">
                                     <div class="media">
                                         <a class="thumbnail pull-left" href="#"> {% if item.item.image %}
@@ -62,14 +108,16 @@
                                     </div>
                                 </td>
                                 <td class="col-md-1" style="text-align: center;margin-left:15px;margin-top:20px">
-                                    <input type="number" class="form-control" id="exampleInputEmail1"
-                                           value='{{ item.quantity }}'/>
+                                    <form action="." method="GET">
+                                    <input type="hidden" name="item" value="{{ item.item.product_id}}">
+                                    <input type="number" class="form-control" name="qty" value='{{ item.quantity }}'/>
+                                    <input type="submit" class="btn btn-info btn pull-right update-qty" style="margin-top:10px" value=" Update">
                                 </td>
                                 <td class="col-md-1 text-center"><strong>${{ item.itemPrice }}</strong></td>
-                                <td class="col-md-1 text-center"><strong>{{ item.line_item_total }}</strong></td>
+                                <td id='item-line-total-{{ item.item.product_id }}' class="col-md-1 text-center" ><strong>{{ item.line_item_total }}</strong></td>
                                 <td class="col-md-1">
                                     <div class="media">
-                                        <input type="submit" class="btn btn-info btn pull-right" style="margin-top:10px"value=" Update">
+                                        
 
                                         <div class="col-md-offset-1">
                                             <br/>
@@ -92,23 +140,8 @@
                         <td></td>
                         <td></td>
                         <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>$24.59</strong></h5></td>
+                        <td id='subtotal' class="text-right"><h5><strong>{{object.subtotal}}</strong></h5></td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><h5>VAT Added</h5></td>
-                        <td class="text-right"><h5><strong>$6.94</strong></h5></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>$31.53</strong></h3></td>
-                    </tr>
-
                     <tr>
                         
                       <td></td>
