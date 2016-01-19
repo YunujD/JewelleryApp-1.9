@@ -52,8 +52,12 @@ $(".update-qty").click(function(event){
 <br>
 
             <div class='row'>
-                 <div class='col-sm-3 lead text-align-center' >
-              <h1>Cart</h1>
+                 <div class='col-sm-3 lead text-align-left' >
+                 <h1>Cart Details</h1>
+                 <hr/>
+              <br/>
+               <h3 style="text-align:left">Customer Name :</h3>
+               <h3 style="text-align:left">Mobile Number :</h3>
                 </div>
                 <div class='col-sm-7'>
                 {% include 'material_list.html' %}
@@ -61,11 +65,12 @@ $(".update-qty").click(function(event){
         </div>
        
 <br>
+
 <br>
 <br>
 <h3 id='jquery-message'></h3>
 {% if object.cartitem_set.count < 1 %}
-    <h2> No items Present</h2>
+    <h2> No items Selected Yet!</h2>
             {% else %}
     </h2>
     <div class="container">
@@ -75,8 +80,8 @@ $(".update-qty").click(function(event){
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th><h4><strong>Product</strong></h4></th>
-                        <th><h4><strong>Quantity</strong></h4></th>
+                        <th class="text-center"><h4><strong>Product</strong></h4></th>
+                        <th class="text-center"><h4><strong>Quantity</strong></h4></th>
                         <th class="text-center"><h4><strong>Price</strong></h4></th>
                         <th class="text-center"><h4><strong>Total</strong></h4></th>
                         <th></th>
@@ -87,7 +92,7 @@ $(".update-qty").click(function(event){
                     {% for item in object.cartitem_set.all %}
                         <form action="." method="GET">
                             <tr id='item-{{ item.item.id }}'>
-                                <td class="col-sm-8 col-md-6">
+                                <td class="col-sm-5 col-md-5">
                                     <div class="media">
                                         <a class="thumbnail pull-left" href="#"> {% if item.item.image %}
                                                                             <img src='{{item.item.image.url}}' style="align:middle"height="70" width="70"/>
@@ -113,7 +118,7 @@ $(".update-qty").click(function(event){
                                     <input type="number" class="form-control" name="qty" value='{{ item.quantity }}'/>
                                     <input type="submit" class="btn btn-info btn pull-right update-qty" style="margin-top:10px" value=" Update">
                                 </td>
-                                <td class="col-md-1 text-center"><strong>${{ item.itemPrice }}</strong></td>
+                                <td class="col-md-2 col-md-offset-1 text-center"><strong>${{ item.itemPrice }}</strong></td>
                                 <td id='item-line-total-{{ item.item.product_id }}' class="col-md-1 text-center" ><strong>{{ item.line_item_total }}</strong></td>
                                 <td class="col-md-1">
                                     <div class="media">

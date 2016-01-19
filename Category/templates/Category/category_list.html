@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% if object_list %}
+
+<br/>
+<h3> The Categories available are: </h3>
+
+<br/>
+<br/>
+<table class='table table-striped'>
+{% for object in object_list %}
+<tr>
+	<td><a class='lead text-align-center' href="{{object.get_absolute_url}}" >{{object.category_name}}</a></td>
+	<!-- {% if object.image %}
+	<td><img src='{{object.image.url}}' height="70" width="70" /></td>
+	{% endif %} -->
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<h3> The Search didn't return any match </h3>
+{% endif %}
+
+{% endblock %}

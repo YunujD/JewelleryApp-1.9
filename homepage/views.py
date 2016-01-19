@@ -14,7 +14,7 @@ def home(request):
     customer_form = CustomerForm(request.POST or None)
     if customer_form.is_valid():
         print customer_form.cleaned_data['first_name']
-    return render(request, "home.html", {'form': customer_form})
+    return render(request, "home.html", {'customer_form': customer_form})
 
 
 def about(request):
@@ -25,15 +25,16 @@ def homepage(request):
     if request.user.is_anonymous():  # to check if the user has logged in and isn't anonymous
         return HttpResponseRedirect("http://127.0.0.1:8000/")
     else:
+        customer_form = CustomerForm(request.POST or None)
         #queryset = MaterialPrice.objects.get(timestamp=str(datetime.datetime.now().date()))
-        gold_obj = Material.objects.filter(name__startswith="gold").order_by('-id').first()
+        gold_obj = Material.objects.filter(name__istartswith="gold").order_by('-id').first()
         if gold_obj:
             gold_id = gold_obj.id
             latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp').first()
             request.session['material_date'] = latest_gold_obj.timestamp.strftime('%Y-%m-%d T %H:%M:%S')
             request.session['gold_price'] = float(latest_gold_obj.rate)
             #print request.session.gold_price
-        silver_obj = Material.objects.filter(name__startswith="silver").order_by('-id').first()
+        silver_obj = Material.objects.filter(name__istartswith="silver").order_by('-id').first()
         if silver_obj:
             silver_id = silver_obj.id
             latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp').first()
@@ -44,7 +45,7 @@ def homepage(request):
         #request.session['material_date'] = queryset.materialDate
         ##request.session['gold_price'] = queryset.goldPrice
         #request.session['silver_price'] = queryset.silverPrice
-        context = {'search_form': ProductSearchForm}
+        context = {'search_form': ProductSearchForm,'customer_form': customer_form}
         return render(request, "homepage.html", context)
 
 
