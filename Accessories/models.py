@@ -14,7 +14,7 @@ class Material(models.Model):
 
 class MaterialPrice(models.Model):
     name = models.ForeignKey(Material)
-    rate = models.DecimalField(decimal_places=2, max_digits=20,default=Decimal('0.0000'))
+    rate = models.DecimalField(decimal_places=2, max_digits=20,default=Decimal('0.00'))
     timestamp = models.DateTimeField(auto_now_add = True, auto_now=False)
     updated = models.DateTimeField(auto_now_add = False, auto_now=True)
 

@@ -24,10 +24,10 @@ class CartItem(models.Model):
 
 def cart_item_pre_save_reciever(sender, instance, *args, **kwargs):
 	qty = instance.quantity
-	price = instance.item.calc_price()
+	product_data_dict = instance.item.calc_price()
 	
-	instance.itemPrice = Decimal(price['price'])
-	line_item_total = Decimal(qty) * Decimal(price['price'])
+	instance.itemPrice = Decimal(product_data_dict['price'])
+	line_item_total = Decimal(qty) * Decimal(product_data_dict['price'])
 	instance.line_item_total = line_item_total
 
 pre_save.connect(cart_item_pre_save_reciever, sender=CartItem)
@@ -35,6 +35,11 @@ pre_save.connect(cart_item_pre_save_reciever, sender=CartItem)
 def cart_item_post_save_reciever(sender, instance, *args, **kwargs):
 	instance.cart.update_subtotal()
 post_save.connect(cart_item_post_save_reciever, sender=CartItem)
+
+
+
+
+
 
 class Cart(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)

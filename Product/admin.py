@@ -24,3 +24,5 @@ class RegisterProductStone(admin.ModelAdmin):
 		mode=ProductStone
 
 admin.site.register(ProductStone,RegisterProductStone)
+
+admin.site.register(Catalog)
