@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h3> {{object}}</h3>
+<table class='table'>
+
+{% for product in object.product_set.all %}
+
+<tr>
+	<td><a class='lead text-align-center' href="{{object.get_absolute_url}}" >{{product.product_name}}</a></td>
+	<!-- {% if object.image %}
+	<td><img src='{{object.image.url}}' height="70" width="70" /></td>
+	{% endif %} -->
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

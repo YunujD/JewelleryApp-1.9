@@ -32,6 +32,8 @@ urlpatterns = [
 
 
     url(r'^products/', include('Product.urls')),
+    url(r'^category/', include('Category.urls')),
+   
     url(r'^admin/', admin.site.urls, name="admin"),
 
     # from django registration redux
