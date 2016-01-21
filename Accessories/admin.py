@@ -4,22 +4,22 @@ from .models import *
 
 # Register your models here.
 
-class RegisterMaterial(admin.ModelAdmin):
-    list_display = ['name']
+# class RegisterMaterial(admin.ModelAdmin):
+#     list_display = ['name']
 
-    class Meta:
-        mode = Material
-
-
-admin.site.register(Material, RegisterMaterial)
-class RegisterMaterialPrice(admin.ModelAdmin):
-    list_display = ['name','rate', 'timestamp']
-
-    class Meta:
-        mode = MaterialPrice
+#     class Meta:
+#         mode = Material
 
 
-admin.site.register(MaterialPrice, RegisterMaterialPrice)
+# admin.site.register(Material, RegisterMaterial)
+# class RegisterMaterialPrice(admin.ModelAdmin):
+#     list_display = ['name','rate', 'timestamp']
+
+#     class Meta:
+#         mode = MaterialPrice
+
+
+# admin.site.register(MaterialPrice, RegisterMaterialPrice)
 
 class RegisterStone(admin.ModelAdmin):
     list_display = ['name', 'rate_per_carat']
@@ -38,3 +38,13 @@ class RegisterStoneType(admin.ModelAdmin):
 
 
 admin.site.register(StoneType, RegisterStoneType)
+
+
+class RegisterRate(admin.ModelAdmin):
+    list_display = ['timestamp','sRate', 'gRate']
+
+    class Meta:
+        mode = MaterialRate
+
+
+admin.site.register(MaterialRate, RegisterRate)

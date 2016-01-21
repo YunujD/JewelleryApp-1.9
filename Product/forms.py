@@ -16,4 +16,4 @@ class ProductAddForm(forms.ModelForm):
 	class Meta:
 	   model = Product
 	   image = models.ImageField(upload_to = 'products/', default = 'products/no-img.jpg')
- 	   fields = ['product_name','product_weight','product_desc','category','sub_category','material','stones','loss_type','barcode','image']
+ 	   fields = ['product_name','product_weight','barcode','image']

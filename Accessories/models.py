@@ -5,21 +5,21 @@ from decimal import Decimal
 from django.db import models
 
 
-class Material(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+# class Material(models.Model):
+#     name = models.CharField(max_length=50, unique=True)
 
-    def __unicode__(self):
-        return self.name
+#     def __unicode__(self):
+#         return self.name
 
 
-class MaterialPrice(models.Model):
-    name = models.ForeignKey(Material)
-    rate = models.DecimalField(decimal_places=2, max_digits=20,default=Decimal('0.00'))
-    timestamp = models.DateTimeField(auto_now_add = True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add = False, auto_now=True)
+# class MaterialPrice(models.Model):
+#     name = models.ForeignKey(Material)
+#     rate = models.DecimalField(decimal_places=2, max_digits=20,default=Decimal('0.00'))
+#     timestamp = models.DateTimeField(auto_now_add = True, auto_now=False)
+#     updated = models.DateTimeField(auto_now_add = False, auto_now=True)
 
-    def __unicode__(self):
-        return self.name.name
+#     def __unicode__(self):
+#         return self.name.name
         
 
 class Stone(models.Model):
@@ -44,6 +44,16 @@ class StoneType(models.Model):
 
     class Meta:
         unique_together = ('StoneType_id', 'Stone')
+
+
+class MaterialRate(models.Model):
+    gRate = models.DecimalField(decimal_places=2, max_digits=10,default=Decimal('0.00'))
+    sRate = models.DecimalField(decimal_places=2, max_digits=10,default=Decimal('0.00'))
+    timestamp = models.DateTimeField(auto_now_add = True, auto_now=False)
+
+    def __unicode__(self):
+        return "%s 's Rate"%(self.timestamp)
+
 # class Stone(models.Model):
 # stone_id=models.AutoField(primary_key=True,null=False)
 # 	stone_name=models.CharField(max_length=100, unique=True)

@@ -112,9 +112,9 @@ db.sqlite3
 >>>>>>> 9d1a13a6fd0b8442c7c9d674187422662a566f65
 
 #migration
-/Accessories/migrations/
-/carts/migrations/
-/Category/migrations/
-/Customer/migrations/
-/Product/migrations/
+/Accessories/migrations
+/carts/migrations
+/Category/migrations
+/Customer/migrations
+/Product/migrations
 

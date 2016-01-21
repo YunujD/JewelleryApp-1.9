@@ -6,7 +6,7 @@ from registration.models import RegistrationProfile
 
 from .form import ContactForm, ActivationForm
 from Product.forms import ProductSearchForm
-from Accessories.models import Material,MaterialPrice
+from Accessories.models import MaterialRate
 from Customer.forms import CustomerForm
 
 
@@ -27,18 +27,17 @@ def homepage(request):
     else:
         customer_form = CustomerForm(request.POST or None)
         #queryset = MaterialPrice.objects.get(timestamp=str(datetime.datetime.now().date()))
-        gold_obj = Material.objects.filter(name__istartswith="gold").order_by('-id').first()
+        gold_obj = MaterialRate.objects.all().first()
         if gold_obj:
-            gold_id = gold_obj.id
-            latest_gold_obj = MaterialPrice.objects.filter(name=gold_id).order_by('-timestamp').first()
-            request.session['material_date'] = latest_gold_obj.timestamp.strftime('%Y-%m-%d T %H:%M:%S')
-            request.session['gold_price'] = float(latest_gold_obj.rate)
+            request.session['material_date'] = gold_obj.timestamp.strftime('%Y-%m-%d T %H:%M:%S')
+            request.session['gold_price'] = float(gold_obj.gRate)
+            request.session['silver_price'] = float(gold_obj.sRate)
             #print request.session.gold_price
-        silver_obj = Material.objects.filter(name__istartswith="silver").order_by('-id').first()
-        if silver_obj:
-            silver_id = silver_obj.id
-            latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp').first()
-            request.session['silver_price'] = float(latest_silver_obj.rate)
+        # silver_obj = Material.objects.filter(name__istartswith="silver").order_by('-id').first()
+        # if silver_obj:
+        #     silver_id = silver_obj.id
+        #     latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp').first()
+        #     request.session['silver_price'] = float(latest_silver_obj.rate)
 
         #silver_id = Material.oblects.filter(name__startswith="silver")
         #gold_price = MaterialPrice.objects.()
