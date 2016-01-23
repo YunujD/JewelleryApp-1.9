@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from decimal import Decimal
 from Category.models import Category,SubCategory
-from Accessories.models import StoneType
+from Accessories.models import StoneType, MaterialRate
 # Create your models here.
 
 
@@ -92,15 +92,78 @@ class Product(models.Model):
 
 	def calc_price(self):
 		material_rate = None
-		category = self.category.category_name
-		material = self.material
-		
+		category = None
+		subCategory = None
+		loss_value = None
+		manf_cost = None
+		weight = None
+
+		weight = self.product_weight
+		material_obj = MaterialRate.objects.all().first()
+		sub_category = self.catalog.sub_cat.sub_category_name
+		category = self.catalog.sub_cat.sub_category_name
+		material = self.catalog.sub_cat.material
+		catalog_name = self.catalog.catalog_name
+		catalog_id = self.catalog.id
+		loss_value = self.catalog.sub_cat.loss
+		manf_cost = self.catalog.sub_cat.manf_cost
 		#loss_tire = self.loss_type.loss_type_name
-		product_stones = ProductStone.objects.filter(product=self.product_id)
-		if self.loss_type:
-			loss_value = self.loss_type.loss_in_lal
+		product_stones = CatalogStone.objects.filter(catalog=catalog_id)
+
+		total_price = 0.0
+		data_dict = {}
+		data_dict['category'] = None
+		data_dict['material'] = None
+		data_dict['stone_details'] = None
+		data_dict['sub_category'] = None
+		data_dict['weight'] = None
+		data_dict['loss_value'] = None
+		data_dict['manf_cost'] = None
+		data_dict['price_formula'] = None
+		#print material
+
+		if product_stones:
+			price_array = []
+			stone_total = 0
+			for stone in product_stones:
+				stone_price = 0.0
+				stone_price = stone.quantity * stone.stone_type.Stone.rate_per_carat * stone.stone_type.weight
+				stone_total += stone_price
+				price_array.append(Decimal(stone_price))
+			#print price_array;
+			#print "%s %s %s " %(weight, loss_value, material_rate)
+			
+			data_dict['stone_price'] = price_array
+			data_dict['stone_sum'] = stone_total
+
+
+		if material == "gold":
+			material_rate = material_obj.gRate
+			data_dict['price_formula'] = " ( Weight + Loss ) * Gold Rate + Stone Cost + Manufacturing Cost"
+			total_price = (Decimal(weight) + Decimal(loss_value)) * Decimal(material_rate) + Decimal(stone_total) + manf_cost
+			data_dict['category'] = category
+			data_dict['material'] = material
+			data_dict['stone_details'] = product_stones
+			data_dict['sub_category'] = sub_category
+			data_dict['weight'] = weight
+			data_dict['loss_value'] = loss_value
+			data_dict['manf_cost'] = manf_cost
+		
+		elif material == "silver":
+			material_rate = material_obj.sRate
+			data_dict['price_formula'] = " ( Weight + Weight * Loss % ) * Silver Rate + Stone Cost + Manufacturing Cost"
+			total_price = (Decimal(weight) + Decimal(weight) * Decimal(loss_value)) * Decimal(material_rate) + Decimal(stone_total) + manf_cost
+			data_dict['category'] = category
+			data_dict['material'] = material
+			data_dict['stone_details'] = product_stones
+			data_dict['sub_category'] = sub_category
+			data_dict['weight'] = weight
+			data_dict['loss_value'] = loss_value
+			data_dict['manf_cost'] = manf_cost
 		else:
-			loss_value = None
+			print "error"
+		data_dict['price'] = total_price
+
 		# if material.upper() == 'GOLD':
 		# 	# gold_obj = Material.objects.filter(name__istartswith="gold").order_by('-id')[0]
 		# 	# if gold_obj:
@@ -113,36 +176,11 @@ class Product(models.Model):
 		# 	# 	silver_id = silver_obj.id
 		# 	# 	latest_silver_obj = MaterialPrice.objects.filter(name=silver_id).order_by('-timestamp')[0]
 		# 	# 	material_rate = Decimal(latest_silver_obj.rate)
-			
-		weight = self.product_weight
-		data_dict = {}
-		data_dict['category'] = category
-		data_dict['material'] = material
-		data_dict['stone_details'] = product_stones
-		data_dict['sub_category'] = self.sub_category.sub_category_name
-		data_dict['weight'] = weight
-		data_dict['loss_value'] = loss_value
-
-		total_price = 0.0
-		print data_dict
-		if category:
-			price_array = []
-			stone_total = 0
-			for stone in product_stones:
-				stone_price = 0.0
-				stone_price = stone.quantity * stone.stone_type.Stone.rate_per_carat * stone.stone_type.weight
-				stone_total += stone_price
-				price_array.append(Decimal(stone_price))
-			#print price_array;
-			total_price = (Decimal(weight) - Decimal(loss_value)) * Decimal(material_rate) + Decimal(stone_total)
-			data_dict['stone_price'] = price_array
-			data_dict['stone_sum'] = stone_total
-		data_dict['price'] = total_price
 		#print product_stones
 		# for stone in product_stones:
 		# 	print stone.quantity
 		# 	print stone.stone_type.Stone.rate_per_carat
 		# 	print stone.stone_type.weight
 
-		print data_dict
+		#print data_dict
 		return data_dict

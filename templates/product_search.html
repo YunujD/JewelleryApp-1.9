@@ -81,8 +81,8 @@
 		{% endif %}
 		<p>Product Weight: {{ product_data.weight}}</p>
 		<p>Product Loss: {{ product_data.loss_value}}</p>
-		<p>Total Price = (Weight - Loss) * Rate + stone Cost + Manufacturing Cost</p>
-		<p>Total Price = ({{product_data.weight}} - {{product_data.loss_value}}) * {{ request.session.gold_price }} + {{ product_data.stone_sum}} + Manufacturing cost yet to be added</p>
+		<p>Total Price = {{ product_data.price_formula }}</p>
+		<p>Total Price = ({{product_data.weight}} + {{product_data.loss_value}}) * {{ request.session.gold_price }} + {{ product_data.stone_sum}} + {{ product_data.manf_cost }}</p>
 		<p>Final Price = {{product_data.price}}
 	</div>
 	<div class='col-sm-3 col-sm-offset-2'>
